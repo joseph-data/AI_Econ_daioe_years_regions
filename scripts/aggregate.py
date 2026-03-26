@@ -1,17 +1,3 @@
-"""
-Aggregate SSYK4 → SSYK3 / SSYK2 / SSYK1 and map codes to occupation names.
-
-Inputs
-------
-- data/scb_yr_regions.parquet   (columns: code_4, occupation, county_code,
-                                           county, sex, year, value)
-- structure_ssyk12.csv          (columns: code, name)
-
-Output
-------
-- data/processed/ssyk12_aggregated_ssyk4_to_ssyk1.parquet
-"""
-
 import logging
 from dataclasses import dataclass
 from pathlib import Path
