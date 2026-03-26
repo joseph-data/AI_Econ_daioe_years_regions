@@ -1,4 +1,8 @@
+# Local virtual environment
 .venv
-*.ruff_cache
-__pycache__/
 
+# Ruff cache directories
+*.ruff_cache
+
+# Python bytecode cache directories
+__pycache__/
