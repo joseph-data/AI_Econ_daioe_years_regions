@@ -12,7 +12,7 @@ logging.basicConfig(
 )
 log = logging.getLogger(__name__)
 
-ROOT = Path(__file__).resolve().parent
+ROOT = Path.cwd().resolve()
 DATA_DIR = ROOT / "data"
 OUTPUT_PATH = DATA_DIR / "scb_yr_regions.parquet"
 DEDUP_KEYS = ["code_4", "county_code", "sex", "year"]
@@ -195,7 +195,7 @@ def fetch_all_tables() -> dict[str, pl.DataFrame]:
             try:
                 results[spec.name] = future.result()
             except Exception as exc:
-                log.error("%s — failed: %s", spec.name, exc)
+                log.exception("%s — failed", spec.name)
                 raise
 
     return results
