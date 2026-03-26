@@ -52,7 +52,7 @@ jobs:
         uses: astral-sh/setup-uv@v7
         with:
           enable-cache: true
-          cache-dependency-glob: "pyproject.toml"  # invalidate cache when deps change
+          cache-dependency-glob: "pyproject.toml"
 
       - name: Install dependencies
         run: uv sync --frozen
@@ -69,13 +69,6 @@ jobs:
           name: ssyk12-output
           path: data/processed/ssyk12_aggregated_ssyk4_to_ssyk1.parquet
 
-      - name: Upload logs artifact
-        if: always()  # capture logs even if scripts fail
-        uses: actions/upload-artifact@v4
-        with:
-          name: ssyk12-logs
-          path: logs/**
-          if-no-files-found: ignore
 
 # ============ Sync ============ #
 
@@ -98,13 +91,6 @@ jobs:
           name: ssyk12-output
           path: data/processed/
 
-      - name: Download logs artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: ssyk12-logs
-          path: logs/
-        continue-on-error: true  # logs may not exist if build failed
-
       - name: Validate artifact
         run: |
           set -euo pipefail
@@ -118,17 +104,10 @@ jobs:
           set -euo pipefail
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-
           git add data/processed/ssyk12_aggregated_ssyk4_to_ssyk1.parquet
-
-          if [ -d "logs" ]; then
-            git add logs/
-          fi
-
           if git diff --cached --quiet; then
             echo "No changes to commit."
             exit 0
           fi
-
-          git commit -m "chore: update ssyk12 aggregated data and logs [skip ci]"
+          git commit -m "chore: update ssyk12 aggregated data [skip ci]"
           git push origin "${TARGET_BRANCH}"
