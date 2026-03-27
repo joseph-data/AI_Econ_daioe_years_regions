@@ -1,8 +1,0 @@
-# Virtual environment
-.venv
-
-# Python bytecode cache
-*__pycache__
-
-# Ruff linter cache
-*.ruff_cache
