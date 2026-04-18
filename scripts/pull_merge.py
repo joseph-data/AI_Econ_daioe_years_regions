@@ -194,7 +194,7 @@ def fetch_all_tables() -> dict[str, pl.DataFrame]:
             spec = future_to_spec[future]
             try:
                 results[spec.name] = future.result()
-            except Exception as exc:
+            except Exception:
                 log.exception("%s — failed", spec.name)
                 raise
 
